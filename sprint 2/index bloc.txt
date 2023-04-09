@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="card">
+        <div class="front">
+            <div class="circles">
+                <div class="circle1"></div>
+                <div class="circle2"></div>
+            </div>
+
+            <h2 id="card-num">1234 5678 9123 0000</h2>
+            <div class="data">
+                <h4 id="card-name">Jane Appleseed</h4>
+                <div class="exp-date">
+                    <h4 id="card-month">00</h4>
+                    <h4 id="slash">/</h4>
+                    <h4 id="card-year">00</h4>
+                </div>
+
+            </div>
+        </div>
+        <div class="back">
+            <h5 id="card-cvc">123</h5>
+        </div>
+    </div>
+
+
+    <form id="myForm">
+        <label for="name">CARDHOLDER NAME
+            <input required id="name" type="text" placeholder=" e.g. Jane Appleseed" />
+        </label>
+        <p id="p1"></p>
+
+        <label for="card-number">CARD NUMBER
+            <input required id="card-number" type="text" placeholder=" e.g. XXXX XXXX XXXX XXXX" maxlength="19" />
+        </label>
+        <p id="p2"></p>
+
+
+        <div class="labels">
+
+            <fieldset>
+                <legend>EXP. DATE (MM/YY)</legend>
+                <div class="container">
+                    <label for="MM">
+                        <input required class="date" id="MM" name="MM" placeholder=" MM" />
+                    </label>
+                    <label for="YY">
+                        <input required class="date" id="YY" name="YY" placeholder=" YY" />
+                    </label>
+                </div>
+                <p id="p4"></p>
+            </fieldset>
+
+            <label class="cvc-label" for="cvc">
+                CVC
+                <input maxlength="3" required id="cvc" name="cvc" type="text" placeholder=" e.g. 123" />
+                <p id="p3"></p>
+            </label>
+
+        </div>
+
+        <button id="button" type="submit">Confirm</button>
+        <script src="main.js"></script>
+    </form>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+const submitButton = document.querySelector('#button');
+const form = document.querySelector('#myForm');
+
+let isValid = {
+    name: false,
+    "card-number": false,
+    cvc: false,
+    "MM": false,
+    "YY": false
+};
+
+const inputs = {
+    name: {
+        input: document.getElementById("name"),
+        error: document.getElementById("p1"),
+        validate: value => /^[a-zA-Z\s]+$/.test(value.trim()),
+        cardField: document.getElementById('card-name'),
+        errorMessage: "Ingrese un nombre válido"
+    },
+    card: {
+        input: document.getElementById("card-number"),
+        error: document.getElementById("p2"),
+        validate: value => /^\d{4}\s\d{4}\s\d{4}\s\d{4}$/.test(value.trim()),
+        cardField: document.getElementById('card-num'),
+        errorMessage: "Ingrese un número válido"
+    },
+    cvc: {
+        input: document.getElementById("cvc"),
+        error: document.getElementById("p3"),
+        validate: value => /^\d{3}$/.test(value.trim()),
+        cardField: document.getElementById('card-cvc'),
+        errorMessage: "número inválido"
+    },
+    month: {
+        input: document.getElementById("MM"),
+        error: document.getElementById("p4"),
+        cardField: document.getElementById('card-month'),
+        validate: value =>
+            /^\d{2}$/.test(value.trim()) && Number(value.trim()) > 0 && Number(value.trim()) < 13,
+        errorMessage: "Mes inválido"
+    },
+    year: {
+        input: document.getElementById("YY"),
+        error: document.getElementById("p4"),
+        cardField: document.getElementById('card-year'),
+        validate: value => /^\d{2}$/.test(value.trim()),
+        errorMessage: "Año inválido"
+    }
+};
+
+function checkFormValidity() {
+    const isValidForm = Object.values(isValid).every(valid => valid);
+    submitButton.disabled = !isValidForm;
+    console.log(isValid);
+}
+
+Object.values(inputs).forEach(({ input, error, validate, errorMessage, cardField }) => {
+    input.addEventListener("input", () =>
+        validateInput(input, error, validate, errorMessage, cardField)
+    );
+
+    if (input.id === "card-number") {
+        input.addEventListener("input", addSpacesToCardNumber);
+    };
+
+    input.addEventListener("change", () =>
+        showError(input, error, validate, errorMessage, cardField)
+    );
+});
+
+submitButton.disabled = true;
+form.addEventListener('input', checkFormValidity);
+
+function addSpacesToCardNumber() {
+    const input = document.getElementById("card-number");
+    input.value = input.value
+        .replace(/\s/g, "")
+        .replace(/(\d{4})/g, "$1 ")
+        .trim();
+}
+
+function validateInput(input, error, validate, errorMessage, cardField) {
+    const value = input.value.trim();
+    if (validate(value)) {
+        input.style.borderColor = 'green';
+
+        cardField.textContent = value;
+        isValid[input.id] = true;
+    } else {
+        input.style.borderColor = 'red';
+        error.style.color = 'red';
+
+        isValid[input.id] = false;
+    }
+
+}
+
+function showError(input, error, validate, errorMessage, cardField) {
+    const value = input.value.trim();
+    if (validate(value)) {
+        input.style.borderColor = 'green';
+        error.textContent = '';
+        cardField.textContent = value;
+        isValid[input.id] = true;
+    } else {
+        input.style.borderColor = 'red';
+        error.style.color = 'red';
+        error.textContent = errorMessage;
+        isValid[input.id] = false;
+    }
+}
